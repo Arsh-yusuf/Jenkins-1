@@ -1,0 +1,9 @@
+{
+  "name": "jenkins-deploy-demo",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "build": "echo 'Building app...' && sleep 2"
+  }
+}
