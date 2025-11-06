@@ -9,10 +9,14 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/yourusername/Jenkins-1.git'
-            }
+stage('Checkout Code') {
+    steps {
+        git branch: 'main', 
+            credentialsId: 'github-credentials', 
+            url: 'https://github.com/Arsh-yusuf/Jenkins-1.git'
+    }
+}
+
         }
 
         stage('Build App') {
