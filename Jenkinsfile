@@ -3,19 +3,19 @@ pipeline {
 
     environment {
         DEPLOY_USER = 'ubuntu'
-        DEPLOY_HOST = 'your.server.ip'
+        DEPLOY_HOST = '3.108.215.61'
         DEPLOY_PATH = '/tmp/deploy'
         APP_DIR = '/var/www/myapp'
     }
 
     stages {
-stage('Checkout Code') {
-    steps {
-        git branch: 'main', 
-            credentialsId: 'github-credentials', 
-            url: 'https://github.com/Arsh-yusuf/Jenkins-1.git'
-    }
-}
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github-credentials',
+                    url: 'https://github.com/Arsh-yusuf/Jenkins-1.git'
+            }
+        }
 
         stage('Build App') {
             steps {
@@ -39,12 +39,12 @@ stage('Checkout Code') {
 
     post {
         success {
-            mail to: 'team@example.com',
+            mail to: 'yusufracer594@gmail.com',
                  subject: "✅ Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: "Build succeeded.\n\nCheck it here: ${env.BUILD_URL}"
         }
         failure {
-            mail to: 'team@example.com',
+            mail to: 'yusufracer594@gmail.com',
                  subject: "❌ Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: "Build failed.\n\nCheck logs: ${env.BUILD_URL}"
         }
