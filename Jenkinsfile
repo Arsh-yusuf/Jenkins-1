@@ -17,8 +17,6 @@ stage('Checkout Code') {
     }
 }
 
-        }
-
         stage('Build App') {
             steps {
                 sh 'npm install'
