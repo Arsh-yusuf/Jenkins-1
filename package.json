@@ -4,6 +4,7 @@
   "main": "app.js",
   "scripts": {
   "start": "node app.js",
-  "build": "echo Building app... && timeout /t 2 /nobreak >nul"
+  "build": "node -e \"console.log('Building app...'); setTimeout(()=>console.log('Build complete'),2000)\""
 }
+
 }
