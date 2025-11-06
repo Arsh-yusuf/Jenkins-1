@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "build": "echo 'Building app...' && sleep 2"
-  }
+  "start": "node app.js",
+  "build": "echo Building app... && timeout /t 2 /nobreak >nul"
+}
 }
