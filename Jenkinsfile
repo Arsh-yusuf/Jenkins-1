@@ -19,18 +19,18 @@ pipeline {
 
         stage('Build App') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
+                bat 'npm install'
+                bat 'npm run build'
             }
         }
 
         stage('Deploy to Server') {
             steps {
                 sshagent (credentials: ['ssh-key-id']) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST 'rm -rf $DEPLOY_PATH && mkdir -p $DEPLOY_PATH'
-                        scp -o StrictHostKeyChecking=no -r * $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
-                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST 'bash $DEPLOY_PATH/deploy.sh'
+                    bat """
+                        ssh -o StrictHostKeyChecking=no %DEPLOY_USER%@%DEPLOY_HOST% "rm -rf %DEPLOY_PATH% && mkdir -p %DEPLOY_PATH%"
+                        scp -o StrictHostKeyChecking=no -r * %DEPLOY_USER%@%DEPLOY_HOST%:%DEPLOY_PATH%
+                        ssh -o StrictHostKeyChecking=no %DEPLOY_USER%@%DEPLOY_HOST% "bash %DEPLOY_PATH%/deploy.sh"
                     """
                 }
             }
