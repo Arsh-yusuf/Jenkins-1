@@ -24,17 +24,22 @@ pipeline {
             }
         }
 
-        stage('Deploy to Server') {
+                stage('Deploy to Server') {
             steps {
-                sshagent (credentials: ['ssh-key-id']) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-id', 
+                                                  keyFileVariable: 'SSH_KEY', 
+                                                  usernameVariable: 'SSH_USER')]) {
                     bat """
-                        ssh -o StrictHostKeyChecking=no %DEPLOY_USER%@%DEPLOY_HOST% "rm -rf %DEPLOY_PATH% && mkdir -p %DEPLOY_PATH%"
-                        scp -o StrictHostKeyChecking=no -r * %DEPLOY_USER%@%DEPLOY_HOST%:%DEPLOY_PATH%
-                        ssh -o StrictHostKeyChecking=no %DEPLOY_USER%@%DEPLOY_HOST% "bash %DEPLOY_PATH%/deploy.sh"
+                        set PATH=C:\\Windows\\System32\\OpenSSH;%PATH%
+                        echo Deploying using key: %SSH_KEY%
+                        ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@%DEPLOY_HOST% "rm -rf %DEPLOY_PATH% && mkdir -p %DEPLOY_PATH%"
+                        scp -i "%SSH_KEY%" -o StrictHostKeyChecking=no -r * %SSH_USER%@%DEPLOY_HOST%:%DEPLOY_PATH%
+                        ssh -i "%SSH_KEY%" -o StrictHostKeyChecking=no %SSH_USER%@%DEPLOY_HOST% "bash %DEPLOY_PATH%/deploy.sh"
                     """
                 }
             }
         }
+
     }
 
     post {
